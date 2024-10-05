@@ -88,52 +88,54 @@ public:
         reviews.addAtHead(rating, comment);
     }
 
-     void outputReviews() {
+     void outputReviews() const {
         cout << "Reviews for " << title << ":" << endl;
         reviews.outputReviews();
     }
 
+    void populateFromFile(const string& filename) {
+        ifstream infile(filename);
+        if (!infile.is_open()) {
+            cerr << "Error opening file, Check files name " << filename << endl;
+            return;
+        }
 
-double generateRandomRating() {
-    return (rand() % 41) / 10.0 + 1.0;
-}
-
-void populateMovieFromFile(Movie& movie, const string& filename) {
-    ifstream infile(filename);
-    string comment;
-
-    if (infile.is_open()) {
+        string comment;
         while (getline(infile, comment)) {
-            double rating = generateRandomRating();
-            movie.addReview(rating, comment);
+            double rating = generateRandomRating(); // Assign a random rating
+            addReview(rating, comment);
         }
         infile.close();
-    } else {
-        cerr << "Error opening file, Check files name " << filename << endl;
     }
-}
 
+    static double generateRandomRating() {
+        return (rand() % 41) / 10.0 + 1.0;
+    }
+};
 
 int main() {
     srand(static_cast<unsigned int>(time(0))); // Seed for random number generation
 
-    vector<Movie> movies;
-    
-    // Creating Movie Objects and populating them from files
-    Movie movie1("Inception");
-    populateMovieFromFile(movie1, "inception_reviews.txt");
+    vector<Movie*> movies; // Container for Movie objects
+
+    // Create Movie objects and populate them from files
+    Movie* movie1 = new Movie("Inception");
+    movie1->populateFromFile("inception_reviews.txt");
     movies.push_back(movie1);
 
-    Movie movie2("The Matrix");
-    populateMovieFromFile(movie2, "matrix_reviews.txt");
+    Movie* movie2 = new Movie("The Matrix");
+    movie2->populateFromFile("matrix_reviews.txt");
     movies.push_back(movie2);
 
     // Output all movie reviews
     for (const auto& movie : movies) {
-        movie.outputReviews();
-        cout << endl;
+        movie->outputReviews();
+    }
+
+    // Clean up allocated memory
+    for (const auto& movie : movies) {
+        delete movie;
     }
 
     return 0;
 }
-   
