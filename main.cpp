@@ -1,4 +1,4 @@
-// Lab 18: Movie Reviews
+// Lab 19: Abstract & Automate Lab 18
 // COMSC-210 - Ibrahim Alatig 
 
 //      UML
@@ -12,14 +12,23 @@
 //   ReviewList     
 //
 // - head: ReviewNode* 
-// - tail: ReviewNode* 
 // - count: int        
 // ------------------
 // + ReviewList()     
 // + addAtHead(rating: double, comment: string) 
-// + addAtTail(rating: double, comment: string) 
 // + outputReviews()  
 // + ~ReviewList()    
+
+//      Movie   
+//
+// - title: string 
+// - ratingsAndReviews: ReviewList 
+// --------------------------------
+// + Movie(string)
+// + addReview(string)
+// + outputReviews()
+// + populateFromFile(string)
+// + generateRandomRating(): double
 
 #include <iostream>
 #include <string>
