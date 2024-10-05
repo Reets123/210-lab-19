@@ -51,22 +51,25 @@ public:
         count++;
     }
 
-    void outputReviews() {
+    void outputReviews() const {
         ReviewNode* current = head;
         double totalRating = 0;
 
-        cout <<  "Outputting all reviews:" << endl;
-        for (int i = 1; current != nullptr; i++) {
-            cout << "    > Review #" << i << ": " << fixed << setprecision(1) << current->rating << ": " << current->comment << endl;
+        cout << "Outputting all reviews:" << endl;
+        int i = 1;
+        while (current != nullptr) {
+            cout << "    > Review #" << i++ << ": " << fixed << setprecision(1) 
+                 << current->rating << ": " << current->comment << endl;
             totalRating += current->rating;
             current = current->next;
         }
 
         double average = (count > 0) ? (totalRating / count) : 0;
-        cout << "    > Average: " << average << endl;
+        cout << "    > Average Rating: " << fixed << setprecision(1) << average << endl;
     }
-     
-     ~ReviewList() {
+
+    ~ReviewList() {
+        // Properly delete all nodes in the list
         ReviewNode* current = head;
         while (current != nullptr) {
             ReviewNode* nextNode = current->next;
@@ -101,7 +104,7 @@ public:
     void populateFromFile(const string& filename) {
         ifstream infile(filename);
         if (!infile.is_open()) {
-            cerr << "Error opening file: " << filename << endl;
+            cerr << "Error opening file, Check files name " << filename << endl;
             return;
         }
 
@@ -123,12 +126,12 @@ int main() {
     vector<Movie*> movies; // Container for Movie objects
 
     // Create Movie objects and populate them from files
-    Movie* movie1 = new Movie("Inception");
-    movie1->populateFromFile("inception_reviews.txt");
+    Movie* movie1 = new Movie("Dune2");
+    movie1->populateFromFile("Dune2_reviews.txt");
     movies.push_back(movie1);
 
-    Movie* movie2 = new Movie("The Matrix");
-    movie2->populateFromFile("matrix_reviews.txt");
+    Movie* movie2 = new Movie("Stanford prison experiment");
+    movie2->populateFromFile("Stanford_reviews.txt");
     movies.push_back(movie2);
 
     // Output all movie reviews
