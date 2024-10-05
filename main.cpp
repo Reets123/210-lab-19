@@ -78,38 +78,42 @@ public:
 
 class Movie {
 private:
-    string title;
-    ReviewList reviews;
+    string title; 
+    ReviewList ratingsAndReviews;
 
 public:
     Movie(const string& title) : title(title) {}
 
-    void addReview(double rating, const string& comment) {
-        reviews.addAtHead(rating, comment);
+    // Add a review with a random rating and a given comment
+    void addReview(const string& comment) {
+        double rating = generateRandomRating();
+        ratingsAndReviews.addAtHead(rating, comment);
     }
 
-     void outputReviews() const {
+    // Output all movie reviews
+    void outputReviews() const {
         cout << "Reviews for " << title << ":" << endl;
-        reviews.outputReviews();
+        ratingsAndReviews.outputReviews();
+        cout << endl;
     }
 
+    // Populate reviews from a file
     void populateFromFile(const string& filename) {
         ifstream infile(filename);
         if (!infile.is_open()) {
-            cerr << "Error opening file, Check files name " << filename << endl;
+            cerr << "Error opening file: " << filename << endl;
             return;
         }
 
         string comment;
         while (getline(infile, comment)) {
-            double rating = generateRandomRating(); // Assign a random rating
-            addReview(rating, comment);
+            addReview(comment); // Add review with random rating
         }
         infile.close();
     }
 
     static double generateRandomRating() {
-        return (rand() % 41) / 10.0 + 1.0;
+        return (rand() % 41) / 10.0 + 1.0; // Generates a random rating between 1.0 and 5.0
     }
 };
 
