@@ -21,6 +21,7 @@
 // + outputReviews()  
 // + ~ReviewList()    
 
+#include <iostream>
 #include <string>
 #include <fstream>
 #include <vector>
@@ -78,27 +79,61 @@ public:
 class Movie {
 private:
     string title;
-    ReviewList ratings;
+    ReviewList reviews;
 
 public:
     Movie(const string& title) : title(title) {}
 
     void addReview(double rating, const string& comment) {
-        ratings.addAtHead(rating, comment);
+        reviews.addAtHead(rating, comment);
     }
 
      void outputReviews() {
         cout << "Reviews for " << title << ":" << endl;
-        ratings.outputReviews();
+        reviews.outputReviews();
     }
-};
+
 
 double generateRandomRating() {
     return (rand() % 41) / 10.0 + 1.0;
 }
 
 void populateMovieFromFile(Movie& movie, const string& filename) {
-    ifstream infil
+    ifstream infile(filename);
+    string comment;
+
+    if (infile.is_open()) {
+        while (getline(infile, comment)) {
+            double rating = generateRandomRating();
+            movie.addReview(rating, comment);
+        }
+        infile.close();
+    } else {
+        cerr << "Error opening file, Check files name " << filename << endl;
+    }
+}
+
 
 int main() {
+    srand(static_cast<unsigned int>(time(0))); // Seed for random number generation
+
+    vector<Movie> movies;
+    
+    // Creating Movie Objects and populating them from files
+    Movie movie1("Inception");
+    populateMovieFromFile(movie1, "inception_reviews.txt");
+    movies.push_back(movie1);
+
+    Movie movie2("The Matrix");
+    populateMovieFromFile(movie2, "matrix_reviews.txt");
+    movies.push_back(movie2);
+
+    // Output all movie reviews
+    for (const auto& movie : movies) {
+        movie.outputReviews();
+        cout << endl;
+    }
+
+    return 0;
+}
    
