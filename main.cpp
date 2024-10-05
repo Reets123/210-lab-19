@@ -56,7 +56,7 @@ public:
 
         cout <<  "Outputting all reviews:" << endl;
         for (int i = 1; current != nullptr; i++) {
-            cout << "    > Review #" << i << ": " << current->rating << ": " << current->comment << endl;
+            cout << "    > Review #" << i << ": " << fixed << setprecision(1) << current->rating << ": " << current->comment << endl;
             totalRating += current->rating;
             current = current->next;
         }
@@ -64,6 +64,7 @@ public:
         double average = (count > 0) ? (totalRating / count) : 0;
         cout << "    > Average: " << average << endl;
     }
+     
      ~ReviewList() {
         ReviewNode* current = head;
         while (current != nullptr) {
@@ -73,6 +74,11 @@ public:
         }
     }
 };
+
+class Movie {
+private:
+    string title;
+    ReviewList ratings;
 
 int main() {
     ReviewList reviews;
