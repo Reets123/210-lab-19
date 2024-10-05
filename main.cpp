@@ -80,40 +80,25 @@ private:
     string title;
     ReviewList ratings;
 
-int main() {
-    ReviewList reviews;
-    int choice;
+public:
+    Movie(const string& title) : title(title) {}
 
-    cout << "Which linked list method should we use?" << endl;
-    cout << "    [1] New nodes are added at the head of the linked list" << endl;
-    cout << "    [2] New nodes are added at the tail of the linked list" << endl;
-    cout << "    Choice: ";
-    cin >> choice;
+    void addReview(double rating, const string& comment) {
+        ratings.addAtHead(rating, comment);
+    }
 
-    char moreReviews;
-    do {
-        double rating;
-        string comment;
+     void outputReviews() {
+        cout << "Reviews for " << title << ":" << endl;
+        ratings.outputReviews();
+    }
+};
 
-        cout << "Enter review rating 0-5: ";
-        cin >> rating;
-
-        cout << "Enter review comments: ";
-        cin.ignore(); // Clear input buffer
-        getline(cin, comment);
-
-        if (choice == 1) {
-            reviews.addAtHead(rating, comment);
-        } else {
-            reviews.addAtTail(rating, comment);
-        }
-
-        cout << "Enter another review? Y/N: ";
-        cin >> moreReviews;
-
-    } while (tolower(moreReviews) == 'y');
-
-    reviews.outputReviews();
-    
-    return 0;
+double generateRandomRating() {
+    return (rand() % 41) / 10.0 + 1.0;
 }
+
+void populateMovieFromFile(Movie& movie, const string& filename) {
+    ifstream infil
+
+int main() {
+   
