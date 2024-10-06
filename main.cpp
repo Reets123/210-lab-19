@@ -1,14 +1,7 @@
 // Lab 19: Abstract & Automate Lab 18
 // COMSC-210 - Ibrahim Alatig 
 
-//      UML
-//    ReviewNode    
-//
-// - rating: double 
-// - comment: string
-// - next: ReviewNode* 
-//
-                
+//      UML              
 //   ReviewList     
 //
 // - head: ReviewNode* 
